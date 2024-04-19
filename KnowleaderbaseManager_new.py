@@ -85,8 +85,8 @@ class KnowleaderbaseManager:
 
     def knowleadgebase_API(self, q,k=3, n=5, conf=0.1):
         paths = self.knowleadgebase.similarity_search_with_score(q, n)
-        
+        print(paths)
         result =""
         for i in paths:
-            result+= dict(i)["page_content"]
+            result+= dict(i[0])["page_content"]
         return result, result
