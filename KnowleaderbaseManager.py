@@ -167,7 +167,6 @@ class KnowleaderbaseManager:
         paths_score = []
         for nor_path in paths:
             paths_score.append(nor_path[1])
-            print(nor_path)
 
         val_paths_ind = self.p_val_gen(paths_score, conf)
 
@@ -184,6 +183,7 @@ class KnowleaderbaseManager:
             dictionary = dict(paths[j][0])
             page_content = dictionary["page_content"]
             directory = page_content.split("=")[0]
+            print(directory)
             docs = self.file_paths[directory]['knowleadgebase'].similarity_search_with_score(q, k)
             path_deta = {}
             path_deta['path'] = page_content.split("=")[0]
