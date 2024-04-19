@@ -137,6 +137,7 @@ class KnowleaderbaseManager:
         paths_score = []
         for nor_path in paths:
             paths_score.append(nor_path[1])
+            print(nor_path)
 
         val_paths_ind = self.p_val_gen(paths_score, conf)
 

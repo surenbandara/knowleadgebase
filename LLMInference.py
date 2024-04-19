@@ -83,7 +83,7 @@ class LLAMA2Wrapper:
             #"\nOUTPUT: ")[0]['generated_text'].split('\nOUTPUT:')[1]
             
             #print(keywords)
-            context = self.knowleadgebasemanager.knowleadgebase_API(query,3,5)[0]
+            context = self.knowleadgebasemanager.knowleadgebase_API(query,3,15)[0]
             output_response = self.llama2_pipeline(
                 self.generate_response_prompt(query, context)['text'])[0]['generated_text']
             output_text = output_response.split('\nOUTPUT:')[1]
