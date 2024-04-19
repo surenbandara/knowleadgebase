@@ -7,7 +7,7 @@ from transformers import pipeline
 import torch
 import json
 import os
-from KnowleaderbaseManager import KnowleaderbaseManager 
+from KnowleaderbaseManager_new import KnowleaderbaseManager
 import sys
 import time
 
