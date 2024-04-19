@@ -27,7 +27,7 @@ class KnowleaderbaseManager:
     
         index_path = "knowleadgebase_index"
         try:
-            self.knowleadgebase = self.load_faiss_index(index_path, self.embeddings)
+            self.knowleadgebase = self.load_faiss_index(index_path, self.embeddings ,allow_dangerous_deserialization=True)
         except :
             self.knowleadgebase = self.create_file_paths(path)
             self.save_faiss_index(index_path)
@@ -85,8 +85,8 @@ class KnowleaderbaseManager:
 
     def knowleadgebase_API(self, q,k=3, n=5, conf=0.1):
         paths = self.knowleadgebase.similarity_search_with_score(q, n)
-        print(paths)
         result =""
         for i in paths:
+            print(i)
             result+= dict(i[0])["page_content"]
         return result, result
