@@ -95,8 +95,8 @@ class KnowleaderbaseManager:
                         file_paths[root]['files'].append(filepath)
                     else:
                         file_paths[root] = {}
-                        #file_paths[root]['content'] = root + "=" + filename
-                        file_paths[root]['content'] = filename
+                        file_paths[root]['content'] = root + "=" + filename
+                        #file_paths[root]['content'] = filename
                         file_paths[root]['files'] = [filepath]
 
         return file_paths
@@ -133,7 +133,7 @@ class KnowleaderbaseManager:
 
     def knowleadgebase_API(self, q, n=5, k=5, conf=0.1):
         paths = self.path_knowleadgebase.similarity_search_with_score(q, k)
-        print(paths)
+
         paths_score = []
         for nor_path in paths:
             paths_score.append(nor_path[1])
@@ -147,7 +147,7 @@ class KnowleaderbaseManager:
         if len(valid_paths) == 0:
             valid_paths = paths
         val_paths = copy.deepcopy(paths)
-#        print(paths)
+#      )
         det = []
         for j in range(len(paths)):
             dictionary = dict(paths[j][0])
@@ -156,7 +156,7 @@ class KnowleaderbaseManager:
             docs = self.file_paths[directory]['knowleadgebase'].similarity_search_with_score(q, k)
             path_deta = {}
             path_deta['path'] = page_content.split("=")[0]
-            print(directory)
+
             path_deta['chunkz'] = []
             sum_ = 0
             for doc_ind in range(len(docs)):
@@ -164,7 +164,7 @@ class KnowleaderbaseManager:
 #                print(docs[doc_ind][1])
                 sum_ += docs[doc_ind][1]*paths[j][1]
             path_deta['score'] = sum_ / k
-            print(paths[j][1])
+    
             det.append(path_deta)
 
         sorted_list = sorted(det, key=lambda x: x['score'])
