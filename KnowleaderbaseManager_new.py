@@ -27,7 +27,7 @@ class KnowleaderbaseManager:
     
         index_path = "knowleadgebase_index"
         try:
-            self.knowleadgebase = self.load_faiss_index(index_path, self.embeddings ,allow_dangerous_deserialization=True)
+            self.knowleadgebase = self.load_faiss_index(index_path, self.embeddings )
         except Exception as e:
             print(e)
             self.knowleadgebase = self.create_file_paths(path)
@@ -52,7 +52,7 @@ class KnowleaderbaseManager:
         self.knowleadgebase.save_local(index_path)
 
     def load_faiss_index(self, index_path, embeddings):
-        return FAISS.load_local(index_path, embeddings)
+        return FAISS.load_local(index_path, embeddings,allow_dangerous_deserialization=True)
 
     def text_loader(self, path, encoding='utf-8'):
         loader = TextLoader(path, autodetect_encoding=True)
