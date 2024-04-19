@@ -41,7 +41,8 @@ class KnowleaderbaseManager:
             for filename in files:
                 if filename.endswith('.txt'):
                     filepath = os.path.join(root, filename)
-                    directory_paths.append(self.text_loader(filepath))
+                    print(filepath)
+                    directory_paths+=self.text_loader(filepath)
         
         knowleadgebase = self.knowleadgebase_create(directory_paths,self.embeddings)
         return knowleadgebase
