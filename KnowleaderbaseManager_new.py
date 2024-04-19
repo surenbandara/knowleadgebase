@@ -58,8 +58,8 @@ class KnowleaderbaseManager:
         loader = TextLoader(path, autodetect_encoding=True)
         text_splitter = CharacterTextSplitter(
             separator="\n\n",
-            chunk_size=1000,
-            chunk_overlap=900,
+            chunk_size=100,
+            chunk_overlap=90,
             length_function=len,
             is_separator_regex=False
         )
