@@ -22,6 +22,7 @@ class KnowleaderbaseManager:
             embeddings = HuggingFaceBgeEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2',
                                                   model_kwargs={'device': 'cuda'})
         self.embeddings = embeddings
+        self.file_paths = self.create_file_paths(path)
 
         path_knoleadgebase_path = "pathkb.json"
         file_path_path  = "filepath.json"
@@ -32,7 +33,6 @@ class KnowleaderbaseManager:
           self.path_knowleadgebase = self.retrieve_data_from_json(path_knoleadgebase_path,self.embeddings)["allpaths"]["knowleadgebase"]
 
         except FileNotFoundError:
-          self.file_paths = self.create_file_paths(path)
           content_data = []
           for i in self.file_paths.keys():
               file_list = []
@@ -95,7 +95,7 @@ class KnowleaderbaseManager:
                         file_paths[root]['files'].append(filepath)
                     else:
                         file_paths[root] = {}
-                        # file_paths[root]['content'] = root + "=" + filename
+                        #file_paths[root]['content'] = root + "=" + filename
                         file_paths[root]['content'] = filename
                         file_paths[root]['files'] = [filepath]
 
@@ -105,8 +105,8 @@ class KnowleaderbaseManager:
         loader = TextLoader(path, autodetect_encoding=True)
         text_splitter = CharacterTextSplitter(
             separator="\n\n",
-            chunk_size=100,
-            chunk_overlap=95,
+            chunk_size=1000,
+            chunk_overlap=900,
             length_function=len,
             is_separator_regex=False
         )
