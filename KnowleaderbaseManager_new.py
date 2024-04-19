@@ -28,7 +28,8 @@ class KnowleaderbaseManager:
         index_path = "knowleadgebase_index"
         try:
             self.knowleadgebase = self.load_faiss_index(index_path, self.embeddings ,allow_dangerous_deserialization=True)
-        except :
+        except Exception as e:
+            print(e)
             self.knowleadgebase = self.create_file_paths(path)
             self.save_faiss_index(index_path)
           
