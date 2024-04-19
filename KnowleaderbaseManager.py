@@ -15,9 +15,8 @@ import json
 import base64
 
 import copy
-import ntlk
 from rake_nltk import  Rake
-nltk.download('punkt')
+# nltk.download('punkt')
 
 class KnowleaderbaseManager:
     def __init__(self, path, embeddings=None):
