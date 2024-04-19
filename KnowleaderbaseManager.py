@@ -15,12 +15,18 @@ import json
 import base64
 
 import copy
+import ntlk
+from rake_nltk import  Rake
+nltk.download('punkt')
 
 class KnowleaderbaseManager:
     def __init__(self, path, embeddings=None):
         if embeddings is None:
             embeddings = HuggingFaceBgeEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2',
                                                   model_kwargs={'device': 'cuda'})
+        
+        self.rake_nltk_var = Rake()
+
         self.embeddings = embeddings
         self.file_paths = self.create_file_paths(path)
 
@@ -84,6 +90,31 @@ class KnowleaderbaseManager:
         return data
 
 
+    def keyword_extractor(self , file_path):
+        """
+        Read the contents of a text file and return as a string.
+
+        Args:
+        - file_path (str): The path to the text file.
+
+        Returns:
+        - str: The content of the text file.
+        """
+        try:
+            with open(file_path, 'r') as file:
+                content = file.read()
+
+            self.rake_nltk_var.extract_keywords_from_text(content)
+            keyword_extracted = self.rake_nltk_var.get_ranked_phrases()
+            content =""
+            for keyword in keyword_extracted:
+                content+=keyword+" "
+            return content
+        except FileNotFoundError:
+            print("File not found.")
+            return None
+
+
     def create_file_paths(self, directory):
         file_paths = {}
         for root, dirs, files in os.walk(directory):
@@ -91,11 +122,11 @@ class KnowleaderbaseManager:
                 if filename.endswith('.txt'):
                     filepath = os.path.join(root, filename)
                     if root in file_paths:
-                        file_paths[root]['content'] = file_paths[root]['content'] + " " + filename
+                        file_paths[root]['content'] = file_paths[root]['content'] + " " +  self.keyword_extractor(filepath)
                         file_paths[root]['files'].append(filepath)
                     else:
                         file_paths[root] = {}
-                        file_paths[root]['content'] = root + "=" + filename
+                        file_paths[root]['content'] = root + "=" + self.keyword_extractor(filepath)
                         #file_paths[root]['content'] = filename
                         file_paths[root]['files'] = [filepath]
 

@@ -15,4 +15,5 @@ sentence_transformers
 unstructured
 
 nltk
+rake-nltk
 
