@@ -121,11 +121,11 @@ class KnowleaderbaseManager:
                 if filename.endswith('.txt'):
                     filepath = os.path.join(root, filename)
                     if root in file_paths:
-                        file_paths[root]['content'] = file_paths[root]['content'] + " " +  self.keyword_extractor(filepath)
+                        file_paths[root]['content'] = file_paths[root]['content'] + " " +  filepath
                         file_paths[root]['files'].append(filepath)
                     else:
                         file_paths[root] = {}
-                        file_paths[root]['content'] = root + "=" + self.keyword_extractor(filepath)
+                        file_paths[root]['content'] = root + "=" + filepath
                         #file_paths[root]['content'] = filename
                         file_paths[root]['files'] = [filepath]
 
