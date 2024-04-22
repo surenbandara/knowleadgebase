@@ -41,7 +41,7 @@ class KnowleaderbaseManager:
           if(self.file_paths is False or self.path_knowleadgebase is False):
               raise FileNotFoundError("File not found")
           
-        except FileNotFoundError:
+        except Exception as e:
           content_data = []
           for i in self.file_paths.keys():
               file_list = []
