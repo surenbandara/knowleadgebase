@@ -34,9 +34,13 @@ class KnowleaderbaseManager:
 
 
         try:
+          
           self.file_paths = self.retrieve_data_from_json(file_path_path,self.embeddings)
           self.path_knowleadgebase = self.retrieve_data_from_json(path_knoleadgebase_path,self.embeddings)["allpaths"]["knowleadgebase"]
 
+          if(self.file_paths is False or self.path_knowleadgebase is False):
+              raise FileNotFoundError("File not found")
+          
         except FileNotFoundError:
           content_data = []
           for i in self.file_paths.keys():
@@ -79,14 +83,18 @@ class KnowleaderbaseManager:
 
     # Function to retrieve data from JSON file
     def retrieve_data_from_json(self,json_file ,embeddings):
-        with open(json_file, 'r') as f:
-            data = json.load(f)
+        try:
+            with open(json_file, 'r') as f:
+                data = json.load(f)
 
-        paths = data.keys()
-        for path in paths:
-            data[path]["knowleadgebase"] = self.deserialize_knowledge_base(data[path]["knowleadgebase"],embeddings)
+            paths = data.keys()
+            for path in paths:
+                data[path]["knowleadgebase"] = self.deserialize_knowledge_base(data[path]["knowleadgebase"],embeddings)
 
-        return data
+            return data
+        
+        except Exception as e:
+            return False
 
 
     def keyword_extractor(self , file_path):
